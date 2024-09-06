@@ -20,12 +20,12 @@ Since the extracted digits (76) match the original number (76), 76 is an automor
 int main(){
 
 int num, sqr;
+
+printf("\nEnter a positive integer:\t ");
+scanf("%d", &num);
+
 int og_num;
 og_num=num;
-
-
-printf("\nEnter a positive integer: ");
-scanf("%d", &num);
 
 sqr = num*num;
 
@@ -42,12 +42,11 @@ int comp=0;
 int denominator=pow(10,ctr);//to be compared with num 
 comp=sqr%denominator;
 if(comp==og_num){
-printf("\nAutomorphic\n");
+printf("\n\tGiven number is automorphic\n");
 }
 else{
-printf("\nNot automorphic\n");
+printf("\n\tGiven number is not automorphic\n");
 }
-printf("\n%d\n", comp);
 
 return EXIT_SUCCESS;
 }
