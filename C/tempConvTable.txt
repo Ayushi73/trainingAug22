@@ -1,0 +1,45 @@
+
+// temp conversion table
+#include<stdio.h>
+#include<string.h>
+
+int main(){
+    
+    float FarenheitToCelsius(float tempF){
+        int tempC=(tempF-32)*5/9;
+        return tempC;
+    }
+    
+    
+    char arr[]="Temperature Conversion Table";
+    printf("%s\n", arr);
+    
+    int len=0;
+    
+    while(arr[len]!='\0'){
+        
+        printf("-");
+        len++;
+    }
+   // printf("\nTemperature in Farenheit | Temperature in Celsius\n");
+    printf("\n");
+    float Tc , Tf;
+    
+    for(int i=10; i<100; i=i+5){
+        
+        Tf=i;
+        Tc=FarenheitToCelsius(Tf);
+        
+        printf("%5.2f F     |     %5.2f C\n", Tf, Tc);
+        
+    }
+    
+    
+    
+
+    
+    
+    
+    return 0;
+    
+}

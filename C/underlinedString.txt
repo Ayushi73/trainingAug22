@@ -1,0 +1,22 @@
+
+// to print underlined string
+
+#include <stdio.h>
+#include<string.h>
+
+int main()
+{
+   char string[100]="Ayushi is learning C.";
+  // printf("Enter the string : \t");
+  // scanf("%s", string);
+   
+    printf("\n\n");
+    printf("%s",string);
+    printf("\n");
+
+   for(int i=0; i<strlen(string); i++){
+       
+       printf("-");
+   }
+    return 0;
+}

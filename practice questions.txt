@@ -1,0 +1,257 @@
+28 aug: 
+
+File and Directory Management
+	1.  Creating Directories:
+			Create a directory named projects in your home directory. Inside the projects directory, create subdirectories named project1, project2, and project3.
+	2.  Creating Files:
+			In the project1 directory, create an empty file named README.txt using the touch command.
+			Create another file named notes.txt with some text content in the project2 directory
+	3. Listing Files and Directories:
+			List all files and directories in your home directory with detailed information.
+			List all files, including hidden files, in the projects directory.
+	4. Deleting Files and Directories:
+			Delete the project3 directory inside project2 and all its contents.
+			Delete the INFO.txt file from the project1 directory.
+	5. Changing Permissions:
+			Create a file named script.sh in the project1 directory and give it execute permissions for the owner only.
+			Change the permissions of notes.txt so that the owner has read and write permissions, the group has read-only permissions, and others have no permissions.
+
+29 aug:
+
+Practice Questions
+1. Create a file named file1.txt file2.txt with the content
+ 
+2. Combine the contents of file1.txt and file2.txt and write the combined content to a new file named combined.txt.
+ 
+3. Use the cat command to view the contents of file1.txt and then append additional text "Appended Text" to the end of file1.txt.
+ 
+4. Copy the file file1.txt to a new file named file1_backup.txt. Ensure the backup file is an exact copy of the original.
+ 
+5. Copy all files with the .txt extension from the current directory to a directory named backup_dir. The backup_dir already exists.
+ 
+6. Copy the file file1.txt to the /tmp directory and rename it to file1_tmp.txt.
+ 
+7. Move the file file1.txt from the current directory to the archive directory. Assume the archive directory exists.
+ 
+8. Rename file2.txt to file2_renamed.txt within the current directory.
+ 
+9. Display the disk usage of the backup_dir directory in a human-readable format.
+ 
+10. Use the du command to display the total disk usage of the logs directory and its subdirectories.
+ 
+11. Find out the disk usage of all files and directories within the current directory and sort the output by size. ( hint use pipe and sort command)
+ 
+12. Count the number of lines, words, and characters in the file file1.txt.
+ 
+13. Display only the number of lines in file2.txt using the wc command.
+ 
+14. Find out the number of words in all .txt files in the current directory.
+
+1. Command to list detailed information only for directories within the current directory.
+2. How would you search for the occurrences of the variable 'count' in all .c files and display the line numbers where it appears?
+3. How can you check if the user 'user54' is currently logged into the system?
+4. How would you list all filenames in the current directory that do not contain the string backup?
+5. List filenames that do not contain the string "temp" (case-insensitive):
+6.  What command would you use to list all filenames in the current directory that do not contain the string log in any case (case-insensitive)?
+7. How can you search for the string "function" in all .c and .h files?
+8. How would you search for the word "main" as a complete word in all .c files?
+9. How can you find all lines that start with #define in all .c files?
+10. What command would you use to find lines that contain only the string TODO in all .c and .h files?
+11. How would you list files in the current directory for which others (not the owner or group) have read and write permissions?
+
+1. Write a command to find all files with a .txt extension in the current directory.
+2. Find all directories named backup within the /home2/user54 directory.
+3.  Find all files modified in the last 30 days
+4. Write a command to find all empty files in the current directory and its subdirectories.
+5. Find all files in the /etc directory that are readable and writable by the owner. (use etc directory in the root (\) directory)
+6. Write a command to find all files that start with the letter "a" in the current directory.
+7. Find all .jpg files in the ./images directory that were modified in the last 14 days.
+8. Write a command that finds all .log files in the current directory and deletes them. ( create some .log files and try the command)
+9. Write a command to find all files owned by the user user54 in the /home/user54 directory.
+10. Find all files in the current directory and print their sizes.
+
+create logfile.txt with following contents
+2024-08-29 09:00:12 INFO  Starting backup process for server01.
+2024-08-29 09:05:34 WARN  Disk space running low on /dev/sda1.
+2024-08-29 09:07:18 ERROR Failed to back up database db01.
+2024-08-29 09:10:55 INFO  Backup process completed for server01.
+2024-08-29 09:12:03 INFO  Starting backup process for server02.
+2024-08-29 09:14:27 ERROR Failed to back up database db02.
+2024-08-29 09:17:42 INFO  Backup process completed for server02.
+2024-08-29 09:20:33 WARN  Disk space running low on /dev/sda2.
+2024-08-29 09:22:47 INFO  Starting backup process for server03.
+2024-08-29 09:24:59 ERROR Failed to back up database db03.
+2024-08-29 09:28:16 INFO  Backup process completed for server03.
+2024-08-29 09:30:21 INFO  Starting backup process for server04.
+2024-08-29 09:32:40 ERROR Failed to back up database db04.
+2024-08-29 09:35:52 INFO  Backup process completed for server04.
+2024-08-29 09:40:00 WARN  Disk space running low on /dev/sda3.
+2024-08-29 09:45:14 INFO  Starting backup process for server05.
+2024-08-29 09:47:36 ERROR Failed to back up database db05.
+2024-08-29 09:50:00 INFO  Backup process completed for server05.
+1. Find all lines that contain the word "ERROR".
+2. Find all lines that contain the word "warn" without considering the case.
+3. Find all lines that contain the whole word "INFO".
+4. Display the line numbers along with the lines that contain the word "backup".
+5. Count how many times the word "Completed" appears in the file.
+6. Display all lines that do not contain the word "INFO".
+7. Find all lines that start with a timestamp of "2024-08-29 09:10".
+8. Find all lines that contain either "ERROR" or "WARN"
+9.  Search for the word "Failed" in all files in the current directory and its subdirectories.
+10. Find all lines that end with a period (.).
+
+3 sep:
+
+1. Write a program to perform simple arithmetic operation on two integers.
+
+2. To calculate Area and Circumference of a circle
+
+3. write a  C program that performs temperature conversions between Celsius to Fahrenheit.
+ 
+4. Write a program that uses the ternary operator (?:) to find the maximum of two numbers.
+ 
+5. Extend the program to find the maximum of three numbers using nested ternary operators.
+ 
+6. Write a program that calculates the Body Mass Index (BMI) based on user input for weight (in kg) and height (in meters). (Formula bmi =weight/(height * height)
+
+7. Implement a small C program that performs the following tasks:
+	Read an integer representing the student score.
+	Read a character representing the Student Grade (A, B, C, D, or F).
+	Print Your score is 90 and Grade is A. 
+1. program to find given number is Odd or Even
+
+2. program to find largest of three numbers
+ 
+ 
+3. Write a program that takes a score (0-100) as input from the user and uses if statements to determine the corresponding grade:
+
+90-100: A
+
+80-89: B
+
+70-79: C
+
+60-69: D
+
+Below 60: F
+
+Print the grade.
+ 
+4. Temperature Advice:
+
+Write a program that takes a temperature value as input and uses if statements to print advice based on the temperature:
+
+Above 30: "It's hot outside, stay hydrated!"
+
+Between 20 and 30: "The weather is nice and warm."
+
+Between 10 and 19: "It's a bit chilly, wear a jacket."
+
+Below 10: "It's cold outside, stay warm!"
+ 
+5. BMI Calculator:
+
+Extend BMI program and Use if statements to classify the BMI into categories:
+
+Below 18.5: Underweight
+
+18.5 to 24.9: Normal weight
+
+25 to 29.9: Overweight
+
+30 and above: Obesity
+ 
+6. Write a C program that takes a percentage input from the user and prints the corresponding grade based on the following criteria:
+
+>= 90: Grade A
+
+>= 80: Grade B
+
+>= 70: Grade C
+
+>= 60: Grade D
+
+< 60: Fail
+ 
+7. Write a C program that takes an integer input from the user and prints whether it is positive, negative, or zero.
+ 
+8. Write a C program that reads a character from the user and checks whether it is a vowel (a, e, i, o, u) or a consonant using a switch statement.
+ 
+9. Write a C program that simulates a simple calculator using a switch statement. The user should input two numbers and an operator (+, -, *, /) and the program should print the result.
+ 
+10. Write a program that converts time in minutes to time in hours and minutes. Use #define or const to create a symbolic constant for 60.
+ 
+11. Write a program that asks the user to enter the number of days and then converts that value to weeks and days. For example, it would convert 18 days to 2 weeks, 4 days. Display results in the following format: 18 days are 2 weeks, 4 days.
+ 
+
+
+sep 4:
+
+
+1. Write a program that prompts the user for a positive integer and then computes the sum of all the digits of the number. For example, if the user enters 2784, then the program reports 21. If the user enters 59, then the program reports 14. The program should work for any number having one to ten digits.
+
+
+2. Write a program that prompts the user for a positive integer and then reports the closest integer having a whole number square root. For example, if the user enters 8, then the program reports 9. If the user enters 18, then the program reports 16.The program should work  for any number having one to seven digits.
+
+
+3. C program to check if a number is an automorphic number (a number whose square ends in the same digits as the number itself).
+
+Example:
+
+Consider the number 76.
+
+1. Calculate the square of the number:
+
+      76*76=5776
+
+2. Determine the number of digits in the original number:
+
+	Number of digits in 76 is 2.
+
+3. Therefore extract the last 2 digits from the square: (mod of 10 to the power 2)
+
+       5776 mod 100 = 76
+
+4. Compare the extracted digits with the original number:
+
+	Extracted digits: 76
+
+	Original number: 76
+
+Since the extracted digits (76) match the original number (76), 76 is an automorphic number.
+
+
+4. Write a C program to determine whether a given positive integer is an Armstrong number. An Armstrong number (also known as a narcissistic number or pluperfect number) is a number that is equal to the sum of its own digits each raised to the power of the number of digits. Your program should:
+
+
+i. Prompt the user to enter a positive integer.
+
+ii. Determine the number of digits in the number.
+
+iii. Calculate the sum of each digit raised to the power of the total number of digits.
+
+iv Compare the calculated sum to the original number to determine if it is an Armstrong number.
+
+v. Print "Armstrong number" if the number is an Armstrong number, otherwise print "Not an Armstrong number".
+ 
+Write a program to read and print array elements( using index and using address)
+Write a program to initialize an array with the first 10 natural numbers and print the elements.
+ Write a program to find the maximum and minimum elements in an array of integers.
+ Write a program to calculate the sum and average of elements in an array.
+
+5th sep:
+
+1. Write a program to reverse the elements of an array.
+2. Write a program to search for a specific element in an array and print its index if found.
+3. Write a program to sort an array of integers in ascending order.
+4.Write a program to merge two arrays into a single array.
+5. Write a program to count the occurrences of each element in an array.
+6.Write a program to remove duplicate elements from an array.
+7. Write a program to find the second largest element in an array.
+8. Write a program to check if an array is a palindrome.
+9. Write a program to find the transpose of a given 2D array (matrix).
+
+. WAP to get the position of a substring in a string
+2. WAP to reverse the given string
+3. WAP to reverse the given line
+ 

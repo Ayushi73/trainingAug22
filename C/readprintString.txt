@@ -1,0 +1,14 @@
+// read and print a string
+
+#include<stdio.h>
+int main(){
+    
+    char name[40]; // 39 char values, 1 null terminator
+    printf("Enter your first name :\t");
+    scanf("%39s", name); // scanf will take only 39 values
+    
+    printf("Welcome %s!! \n", name);
+
+    
+    return 0;
+}

@@ -1,0 +1,21 @@
+// size and length of a string.
+
+
+#include <stdio.h>
+#include<string.h>
+
+int main()
+{
+    
+    char str[50];
+    
+    printf("Enter a string : \t");
+    scanf("%s", str);
+    
+    int len= strlen(str);
+    int size=sizeof(str);
+    
+    printf("Length of string is %d \nSize of buffer is %d", len, size);
+
+    return 0;
+}
