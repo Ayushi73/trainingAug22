@@ -1,0 +1,863 @@
+/*
+WAP that takes an integer n and n lines, each containing a pair of dates as input. 
+For each pair of dates the program should print the output based on the following conditions:
+.If the first date is ealrlier than the second date , print "E"
+.If the first date is equal to the second date , print "S"
+.If the first date is later than the second date , print "L"
+
+1
+19/12/2008 11/01/2009
+E
+
+*/
+#include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define MAX 10
+
+int main()
+{
+    int n;
+    char arr[n];
+    
+    scanf("%d", &n);
+    
+    for(int i=0; i<n; i++){
+        
+        int d1,d2;
+        int m1,m2;
+        int y1,y2;
+        
+       
+        scanf("%d/%d/%d %d/%d/%d", &d1, &m1, &y1, &d2, &m2, &y2);
+    
+          
+       if(y1<y2){
+           arr[i]='E';
+       }
+       else if(y1>y2){
+           arr[i]='L';
+       }
+       else{
+           
+           if(m1<m2){
+               arr[i]='E';
+           }
+           else if(m1>m2){
+               arr[i]='L';
+           }
+           else{
+               if(d1<d2){
+                   arr[i]='E';
+               }
+               else if(d1>d2){
+                   arr[i]='L';
+               }
+               else{
+                   arr[i]='S';
+               }
+           }
+       }
+      }
+        
+        for(int i=0; i<n; i++){
+            
+            printf("%c\n", arr[i]);
+        }
+        
+   
+
+    return 0;
+}
+
+
+----------------------------------------------------------------------------------------------------------
+
+
+/*You are given 3 strings A, B and C. Your task is to find whether you can write both A and B 
+using the characters of C. 
+Not only that, after writing A and B from C, there should be no letter left in C.
+
+Input: 
+ANNMMC
+LLDKKD
+ANNLLDKKCMMD
+
+Output:
+YES
+
+*/
+
+#include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define MAX 30
+
+int main()
+{
+    char a[MAX], b[MAX], c[MAX];
+    int lena, lenb, lenc;
+    
+    if(fgets(a, MAX, stdin)!=NULL)
+    {
+        lena=strlen(a);
+        if(a[lena-1]=='\n'){
+            a[lena-1]='\0';
+        }
+    }
+    lena=strlen(a);
+    
+    if(fgets(b, MAX, stdin)!=NULL)
+    {
+        lenb=strlen(b);
+        if(b[lenb-1]=='\n'){
+            b[lenb-1]='\0';
+        }
+    }
+    lenb=strlen(b);
+    
+    if(fgets(c, MAX, stdin)!=NULL)
+    {
+        lenc=strlen(c);
+        if(c[lenc-1]=='\n'){
+            c[lenc-1]='\0';
+        }
+    }
+    lenc=strlen(c);
+    
+    /*fputs(a, stdout);
+    printf("\n");
+    
+    fputs(b, stdout);
+     printf("\n");
+    
+    fputs(c, stdout);
+     printf("\n");
+    */
+    
+    int lensum;
+    lensum=lena+lenb;
+    
+    int actr=0, bctr=0;
+    
+    if(lenc==lensum)
+    {
+        
+        for(int i=0; i<lenc; i++)
+        {
+            for(int j=0; j<lena; j++)
+            {
+                if(c[i]==a[j]){
+                    c[i]=' ';
+                    actr++;
+                }
+            }
+        
+        }
+        
+        
+        for(int i=0; i<lenc; i++)
+        {
+            for(int j=0; j<lena; j++)
+            {
+                if(c[i]==b[j]){
+                    c[i]=' ';
+                    bctr++;
+                }
+            }
+        
+        }
+        
+        if(actr+bctr==lenc){
+            printf("YES");
+        }
+        
+        
+       // int cctr=0;
+       // if(actr==lena && bctr==lenb){
+       //     
+       //     for(int y=0; y<lenc; y++){
+       //         
+       //         if(c[y]==' '){
+       //             cctr++;
+       //         }
+       //     }
+       // }
+       // 
+       // if(cctr==lenc){
+       //     
+       //     printf("YES");
+       // }
+        
+        
+        
+    }
+    
+    else
+    {
+        printf("NO\n");
+       // printf("%d %d %d", lena, lenb, lenc);
+    }
+
+    return 0;
+
+}
+
+__________________________________________________________________________________________________________
+
+/**
+Sandy has a string s of length n. In one operation, he can choose any two lexicographically consecutive 
+characters from the string and delete both of them from the string s. 
+The rest of the characters of string s concatinate to form the remaining string. 
+Return an integer denoting the maximum number of times you can do such operations on the string s.
+
+Input : 
+acdz
+Output: 1
+
+***/
+
+
+
+#include <stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#define MAX 30
+
+void numberOps(char * str){
+    
+    int num=0; //number of operations
+ 
+    char res[MAX];
+
+    while(1){
+        int b=0;
+        int check=0;
+        for(int i=0; i<strlen(str)-1; i++)
+        {
+            
+               if((int)str[i]<(int)str[i+1])
+               {
+                  i=i+2;
+                  res[b++]=str[i];
+                  num++;
+                   
+               }
+               else{
+                   res[b++]=str[i];
+               }
+            
+        }
+        
+        strcpy(str,res);
+        
+        for(int i=0; i<strlen(str)-1; i++)
+        {
+            
+               if((int)str[i]<(int)str[i+1])
+               {
+                  check++;
+               }
+            
+        }
+        
+        if(check==0){
+            
+            break;
+        }
+        
+    
+    }
+
+    printf("%d", num);
+
+}
+
+int main()
+{
+    char str[MAX];
+    int len;
+    
+    if (fgets(str, MAX , stdin)!=NULL){
+        len=strlen(str);
+        if(str[len-1]=='\n'){
+            str[len-1]='\0';
+        }
+    }
+   len=strlen(str);
+   
+   numberOps(str);
+   
+  
+    return 0;
+}
+
+__________________________________________________________________________________________________________________________________________________
+
+/*
+WAP that accepts a comma-seperated sequence of words as input and prints the words in a comma-separated 
+sequencence after sorting them alphabetically.
+
+Input:
+order,hello,would,test
+
+Output:
+hello,order,test,would
+
+ */
+ 
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define MAX 50
+
+int main(){
+    
+    int len;
+    
+    char str[MAX];
+    if(fgets(str, MAX, stdin)!=NULL){
+        len=strlen(str);
+        if(str[len-1]=='\n'){
+            str[len-1]='\0';
+        }
+    }
+    len=strlen(str);
+    
+    char temp[MAX];
+    
+    memset(temp, 0, MAX);
+    strcpy(temp,str);
+    temp[len]='\0';
+    
+    
+    int ctr=0;//counts the number of tokens
+    char*tok;
+    tok=strtok(temp, ",");
+    while(tok!=NULL){
+        ctr++;
+        tok=strtok(NULL, ",");
+        
+    }
+    
+    //printf("ctr %d", ctr);
+    
+    char * arr[ctr];
+    for(int i=0; i<ctr; i++){
+        
+        arr[i]=(char *)malloc(MAX*sizeof(char));
+    }
+    
+    
+    //reset temp
+    memset(temp, 0, MAX);
+    strcpy(temp,str);
+    temp[len]='\0';
+    
+    
+    char * token;
+    int b=0;
+    token=strtok(temp, ",");
+    while(token!=NULL){
+        
+        strcpy(arr[b++],token);
+        token=strtok(NULL, ",");
+        
+    }
+    
+    //bubble sort algo to sort lexicographically
+    for(int i=0; i<ctr-1; i++){
+        
+        for(int j=0; j<ctr-1-i; j++){
+            
+            if(strcmp(arr[j],arr[j+1])>0){
+                
+                //swap
+                char tmp[MAX];
+                strcpy(tmp, arr[j]);
+                strcpy(arr[j], arr[j+1]);
+                strcpy(arr[j+1], tmp);
+                
+            }
+        }
+    }
+    
+    
+    for(int i=0; i<ctr; i++){
+        
+        printf("%s", arr[i]);
+        if(i<ctr-1){
+            printf(",");
+        }
+    }
+    
+ 
+}
+_______________________________________________________________________________________________________________________________________________
+
+/*
+
+Given an array containing k distinct numbers taken from 0,1,2...k your task is to find the one that is 
+missing from the array.
+
+in:
+15
+0
+1
+3
+2
+4
+6
+5
+8
+9
+10 
+12 
+11
+13 
+14 
+15 
+
+
+*/
+#include <stdio.h>
+#include<string.h>
+#include <stdlib.h> 
+#define MAX 100
+ int main(){
+     
+    int n;
+    scanf("%d", &n);
+    
+    int arr[n];
+    
+    for(int i=0; i<n; i++){
+        scanf("%d", &arr[i]);
+    }
+    
+   // printf("Your array is : " );
+   //  for(int i=0; i<n; i++){
+   //     printf("%d ", arr[i]);
+   // }
+   
+   
+   //bubble sort
+   for(int i=0; i<n-1; i++){
+       for(int j=0; j<n-1-i; j++){
+           if(arr[j]>arr[j+1]){
+               //swap
+               int tmp;
+               tmp=arr[j];
+               arr[j]=arr[j+1];
+               arr[j+1]=tmp;
+           }
+       }
+   }
+   
+   
+ //  printf("Your array is : " );
+ //    for(int i=0; i<n; i++){
+ //       printf("%d ", arr[i]);
+ //   }
+
+for(int i=0; i<n; i++){
+    if(i!=arr[i]){
+        
+        printf("%d", i);
+        break;
+    }
+}
+    
+
+    return 0;
+}
+________________________________________________________________________________________________________________________________
+
+/*
+
+WAP that accepts a variable number of strings as input and locates the character "a" and string "is"
+in each input. The program should print the sum of the positions found. If a particular string or a 
+character is not found then the position should be considered to be -1.
+
+input: 
+3
+It is a simple problem
+Raspberry is sweeet
+test
+
+output:
+9
+11
+-2
+
+
+*/
+#include <stdio.h>
+#include<string.h>
+#include <stdlib.h> 
+#define MAX 100
+
+ int main(){
+     
+    int n;
+    scanf("%d", &n);
+    getchar();
+    int len;
+    char * str[n];
+    for(int i=0; i<n; i++){
+        str[i]=(char *)malloc(MAX*sizeof(char));
+    }
+    
+     for(int i=0; i<n; i++)
+     {
+        if(fgets(str[i], MAX, stdin)!=NULL)
+        {
+            len=strlen(str[i]);
+            
+            if(str[i][len-1]=='\n')
+            {
+                str[i][len-1]='\0';
+            }
+                
+        }
+        
+    }
+  //  printf("\n\n");
+  //  
+  //   for(int i=0; i<n; i++)
+  //   {
+  //      fputs(str[i], stdout);
+  //      printf(" || ");
+  //  }
+    
+    
+    
+    
+    for(int i=0; i<n; i++){
+        
+        int sum=0, sumchar=0, sumstring=0;
+        
+        for(int j=0; j<strlen(str[i]); j++){
+            
+            if(str[i][j]=='a'){
+                sumchar=sumchar+j;
+            }
+            
+            if(str[i][j]=='i'){
+                if(str[i][j+1]=='s'){
+                    sumstring=sumstring+j;
+                }
+            }
+        }
+        
+        if(sumchar==0){
+            sumchar=-1;
+        }
+        
+        if(sumstring==0){
+            sumstring=-1;
+        }
+        
+        sum=sumstring+sumchar;
+        
+        printf("%d\n", sum);
+        
+        
+        
+    }
+    
+    
+    return 0;
+}
+
+_____________________________________________________________________________________________________________________________________________
+
+/*
+Given a tsring str, your task is to reorder the string using the following algo:
+1. pick the smallest character from str and append it to the result.
+2. pick the smallest characterfrom str which is greater than the last appended character , 
+to the result and append it
+3. repeat step 2 until you cannot append any more characters
+4. pick the largest character from str and append it to the result
+5. pick the largest character from str which is smaller than the last appended character to the
+result and append it
+7. Repeat all steps until you pick all characters from str
+
+in:
+sat 
+
+out:
+ast
+*/
+#include <stdio.h>
+
+int main()
+{
+    printf("Hello World");
+
+    return 0;
+}
+
+------------------------------------------------------------------------------------------------------------
+/*
+
+Given a string str, your task is to reorder the string using the following algo:
+1. pick the smallest character from str and append it to the result.
+2. pick the smallest character from str which is greater than the last appended character, 
+   to the result and append it.
+3. repeat step 2 until you cannot append any more characters
+4. pick the largest character from str and append it to the result
+5. pick the largest character from str which is smaller than the last appended character to the
+result and append it
+7. Repeat all steps until you pick all characters from str
+
+in:
+sat 
+
+out:
+ast
+
+*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 20
+
+int main()
+{
+    char str[MAX];
+    int len;
+    
+    if(fgets(str, MAX, stdin)!=NULL){
+        len=strlen(str);
+        if(str[len-1]=='\n'){
+            str[len-1]='\0';
+        }
+        
+    }
+    len=strlen(str);
+    
+   // char res[len];
+   // 
+   // memset(res, 0, len);
+    
+   // res[len]='\0';
+    
+   for(int i=0; i<len-1; i++){
+       
+      for(int j=0; j<len-1-i; j++){
+          
+          if(str[j]>str[j+1]){
+              
+              //swap
+              char tmp;
+              tmp=str[j];
+              str[j]=str[j+1];
+              str[j+1]=tmp;
+              
+          }
+      }
+   }
+   
+    printf("\nsorted str : ");
+   for(int i=0; i<len; i++){
+       printf("%c", str[i]);
+   }
+
+   
+    
+   
+   char revstr[len+1];
+   for(int i=0; i<len ; i++){
+       revstr[i]=str[len-1-i];
+       
+   }
+   revstr[len]='\0';
+   
+   
+    printf("\nrevstr : ");
+   for(int i=0; i<len; i++){
+       printf("%c", revstr[i]);
+   }
+
+  
+   char mergedstr[len+len];
+  
+   
+   for(int i=0; i<len; i++){
+       mergedstr[i]=str[i];
+   }
+   
+   int b=0;
+   for(int i=len ; i< len+len; i++){
+       
+       mergedstr[i]=revstr[b++];
+  }
+  
+   mergedstr[len+len]='\0';
+   
+
+
+    printf("\nmergedstr : ");
+   for(int i=0; i<len+len; i++){
+       printf("%c", mergedstr[i]);
+   }
+mergedstr[len+len]='\0';
+
+
+    return 0;
+}
+
+----------------------------------------------------------------------------------------------------------
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 30
+ 
+int  compare(char str1[],char str2[])
+{
+    int len1=0, len2=0, sum_of_lengths=0;
+    
+    len1=strlen(str1);
+    len2=strlen(str2);
+    
+    sum_of_lengths=len1+len2;
+    char same_chars[sum_of_lengths+1];//array to store all characters
+    
+    for(int i=0; i<len1; i++)
+    {
+        same_chars[i]=str1[i];
+    }
+    
+    int y=0;
+    for(int i=len1; i<sum_of_lengths; i++)
+    {
+        same_chars[i]=str2[y++];
+    }
+    
+    same_chars[sum_of_lengths]='\0';
+    int char_counter=0; //to count the number of matching characters
+    for(int i=0; i< sum_of_lengths; i++)
+    {
+        if(same_chars[i]==same_chars[0])
+        {
+            char_counter++;
+        }
+        else
+        {
+            char_counter=-1;
+            break;
+        }
+    }
+    if(char_counter==sum_of_lengths)
+    {
+        return 1;
+    }
+
+    //if strings are to be reversed return 1 ;
+    //if no change return 0;
+
+}
+ 
+int main()
+{
+    char * str[MAX];
+    int len;
+    for(int i=0; i< MAX ; i++)
+    {
+        str[i]=(char *)malloc(MAX*sizeof(char));
+    }
+    
+    int ctr=0; //counts the number of strings
+    int k=0;
+    
+    while(1){
+        if(fgets(str[k], MAX, stdin)!=NULL){
+            len=strlen(str[k]);
+            if(str[k][len-1]=='\n'){
+                str[k][len-1]='\0';
+            }
+            ctr++;
+        }
+
+        if(strlen(str[k]) == 0){
+            break;
+        }
+
+         k++;
+    }
+    
+    ctr--;
+  //  str[k]='\0';
+
+  //  printf("%d %d", k, ctr);
+  //  printf("\n len : %ld", strlen(str));
+
+//  printf("You have entered :\n");
+//  
+//  for(int i=0; i<ctr; i++ ){
+//       
+//       printf(" %s\n",  str[i]);
+//   }
+for(int i=0; i<ctr-1; i++)
+{
+     for(int j=0; j<ctr-1-i; j++)
+     {
+         if(strcmp(str[j], str[j+1])>=0)
+         {
+             //swap
+             char tmp[MAX];
+             strcpy(tmp, str[j]);
+             strcpy(str[j],str[j+1]);
+             strcpy(str[j+1],tmp);
+         }
+     }
+}
+
+//printf("\n\nsorted in lexi :\n");
+//
+//for(int i=0; i<ctr; i++ )
+//{
+//      printf(" %s\n",  str[i]);
+//}
+
+int i=0;
+while(i<ctr)
+{
+    for(int j=0; j<ctr-1; j++)
+    {
+        if(str[j][0]==str[j+1][0])
+        {
+            int decision=0;
+            decision=compare(str[j],str[j+1]);
+            //if strings are to be reversed return 1 ;
+            //if no change return 0;
+            //printf("testing");
+            if(decision==1)
+            {
+                if(strlen(str[j])<strlen(str[j+1]))
+                {
+                //swap
+                char tempstr[MAX];
+                strcpy(tempstr,str[j]);
+                strcpy(str[j],str[j+1]);
+                strcpy(str[j+1],tempstr);
+                }
+            }
+        }
+    }
+    i++;
+}
+
+printf("\n\n Output :\n");
+
+for(int i=0; i<ctr; i++ )
+{
+    printf(" %s\n",  str[i]);
+}
+
+ 
+    return 0;
+}

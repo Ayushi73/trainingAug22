@@ -1,0 +1,946 @@
+Practice Questions on strings
+
+/*1. Delete Alternating Characters
+			Given a string s, delete alternating characters from the string to form a new string. For example, delete the second, fourth, sixth, etc., characters.
+		Example:
+			Input: s = "abcdef"
+			Output: "ace"*/
+#include <stdio.h>
+#include<string.h>
+#define MAX 20
+
+int main()
+{
+    char str[MAX], alt[MAX];
+    
+    printf("Enter a string: ");
+    if(fgets(str, MAX, stdin)!=NULL){
+        int len=strlen(str);
+        if(str[len-1]=='\n'){
+            str[len-1]=='\0';
+        }
+        
+        printf("\nInput string: ");
+        if(!fputs(str, stdout)){
+            printf("error with fputs");
+            return 1;
+        }
+        
+    }
+    int len =strlen(str);
+    int j=0;
+    for(int i=0; i<len; i++){
+        
+        if(i%2==0){
+            alt[j]=str[i];
+            j++;
+        }
+        
+    }
+    
+    int len_alt=strlen(alt);
+    alt[len_alt]=='\0';
+    
+    printf("\nOutput string: ");
+        if(!fputs(alt, stdout)){
+            printf("error with fputs");
+            return 1;
+        }
+    
+
+    return 0;
+}
+
+--------------------------------------------------------------------------------------------------------------
+/*2. Remove Duplicate Consecutive Characters
+		Given a string s, remove consecutive duplicate characters until no consecutive duplicates remain. 
+		For example, from "abbaccd", remove "bb" and "cc" in separate operations.
+	Example:
+		Input: s = "abbaccd"
+		Output: "d"
+ 
+Initial String: "abbaccd"
+First Pass:
+	Find and remove "bb".
+	The string becomes "aaccd".
+Second Pass:
+	Find and remove "aa".
+	The string becomes "ccd".
+Third Pass:
+	Find and remove "cc".
+	The string becomes "d".
+Final String: "d"
+ */
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 20
+
+int main()
+{   
+    char str[MAX];
+    int len;
+    printf("Enter string: ");
+    if (fgets(str, MAX, stdin)!=NULL){
+        len=strlen(str);
+        if(str[len-1]=='\n'){
+            str[len-1]='\0';
+        }
+        //fputs(str, stdout);
+    }
+    len=strlen(str);
+    
+    
+    
+   char temp[MAX];
+ 
+   for(int h=0; h<len; h++) 
+   { int k=0;
+    int z=0;
+    
+    
+        for(int i=0; i<len; i++){
+            if(z==0){
+            if(str[i]==str[i+1])
+            {
+                i=i+2;
+                z++;
+                
+            }
+            }
+            
+            temp[k++]=str[i];
+        
+            
+        
+    }
+    temp[k]='\0';
+    memset(str, 0, len);
+    strncpy(str, temp, k);
+}
+    
+    
+    
+fputs(temp, stdout);
+    return 0;
+}
+--------------------------------------------------------------------------------------------------------------
+
+/**3 Given a string s, delete pairs of consecutive vowels (like "ae", "io", etc.). Return the number of deletions made.
+Example:
+Input: s = "beautiful"
+Output: 1 (deletes "ea")***/
+
+
+#include <stdio.h>
+#include<string.h>
+#define MAX 20
+
+
+int main()
+{
+    char str[MAX];
+    int len;
+    
+    printf("Input: s = ");
+    if(fgets(str, MAX, stdin)!=NULL)
+    {
+        
+        len=strlen(str);
+        if(str[len-1]=='\n')
+        {
+            str[len-1]='\0';
+        }
+        
+    }
+    len=strlen(str);
+    
+    int vowelDetected;
+    char tmp[MAX];
+    int j=0;
+    int ctr=0;
+    
+    for(int i=0; i<len; i++){
+        
+        //vowelDetected=0;
+        
+        if(str[i]=='a' ||str[i]=='e'|| str[i]=='i'||str[i]=='o'||str[i]=='u' )
+        {
+            
+            if(str[i+1]=='a' ||str[i+1]=='e'|| str[i+1]=='i'||str[i+1]=='o'||str[i+1]=='u' )
+            {
+                    ctr++;
+                    
+                    
+                    tmp[j]=str[i];
+                    j++;
+                    
+                    tmp[j]=str[i+1];
+                    j++;
+                    
+                    i++;
+                    
+            }
+        }
+            
+        //else
+        //{
+        //    tmp[j]=str[i];
+        //            j++;
+        //}
+        
+        //tmp[j]=str[i];
+        //j++;
+        //
+        //tmp[j]=str[i+1];
+        //j++;
+        
+    }
+   
+tmp[j]='\0';
+
+printf("\nOutput: %d(deletes %s)\n",ctr, tmp);
+//fputs(tmp, stdout);
+
+    return 0;
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+
+/*4.  Check if All Words Are Anagrams
+		Input comma seperated words and, check if all the words are anagrams of each other. 
+		Return true if they are, otherwise false.
+Example:
+Input: ["dusty", "study", "dust", "stydy"]
+Output: false
+ */
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 50
+
+int main()
+{   
+    char str[MAX];
+    int len;
+    printf("Enter comma-seperated words: ");
+    if (fgets(str, MAX, stdin)!=NULL){
+        len=strlen(str);
+        if(str[len-1]=='\n'){
+            str[len-1]='\0';
+        }
+        //fputs(str, stdout);
+    }
+    len=strlen(str);
+    
+    char tmp[MAX];
+    
+    memset(tmp, 0, MAX);
+    strncpy(tmp, str, len);
+    int ctr=0; //counts number of tokens
+    
+    char*tok;
+    tok=strtok(tmp, ",");
+    while(tok!=NULL){
+        ctr++;
+        tok=strtok(NULL, ",");
+    }
+    
+    //printf("ctr : %d", ctr);
+    
+    char * tokarr[ctr]; // stores token
+    for(int i=0; i<ctr; i++){
+        tokarr[i]=(char*)malloc(MAX*sizeof(char));
+    }
+    
+    
+    //reset tmp
+    memset(tmp, 0, MAX);
+    strncpy(tmp, str, len);
+    
+    int toklens[ctr];
+    
+    
+    int b=0;
+    int toklen;
+    char*token;
+    token=strtok(tmp, ",");
+    while(token!=NULL){
+        toklen=strlen(token);
+        toklens[b]=toklen; //stores length of each corresp token
+        strncpy(tokarr[b], token, toklen);
+        tokarr[b][toklen]='\0';
+        token=strtok(NULL, ",");
+        b++;
+    }
+    
+  //  printf("\nToklens : ");
+  //  for(int i=0; i<ctr; i++){
+  //      printf("%d ", toklens[i]);
+  //  }
+  //  printf("\n");
+    
+    
+    
+    int toklenfreq=0; //all token lengths should be same
+    for(int i=0; i<ctr-1; i++){
+        if(toklens[i]==toklen){
+            toklenfreq++;
+        }
+    }
+    
+    //printf("\n%d %d\n", toklen, toklenfreq);
+    
+    if(toklenfreq<ctr-1){
+        printf("\nfalse");
+        return 0;
+    }
+    
+    
+    printf("\n");
+    /////all good till here
+    
+    int arr[ctr][toklen]; //2d array
+    
+    //store ascii value of each letter of each token in 2d array
+    for(int i=0; i<ctr; i++){
+        
+        for(int j=0; j<toklen; j++){
+            
+            arr[i][j]=(int)tokarr[i][j];
+        }
+    }
+    
+  //  printf("ascii array:\n");
+  //  for(int i=0; i<ctr; i++){
+  //     
+  //     for(int j=0; j<toklen; j++){
+  //         
+  //         printf("%d ", arr[i][j]);
+  //     }
+  //     printf("\n");
+  // }
+   
+   
+   printf("\n");
+    
+    //printf("tokenlen: %d\n", toklen);
+    
+    for(int i=0; i<ctr; i++){
+        
+        for(int j=0; j<toklen-1; j++){
+            
+            for(int k=0; k<toklen-1-j; k++){
+                
+                if(arr[i][k]>arr[i][k+1]){
+                    
+                    //swap
+                    int tmp=0;
+                    tmp=arr[i][k];
+                    arr[i][k]=arr[i][k+1];
+                    arr[i][k+1]=tmp;
+                    
+                    
+                }
+            }
+        }
+    }
+    
+
+    
+ //  printf("Sorted arr:\n");
+ //  for(int i=0; i<ctr; i++){
+ //      
+ //      for(int j=0; j<toklen; j++){
+ //          
+ //          printf("%d ", arr[i][j]);
+ //      }
+ //      printf("\n");
+ //  }
+    
+    printf("\n");
+    
+    int finalctr1=0;
+    int finalctr2=0;
+    
+    for(int i=0; i<ctr; i++){
+        finalctr1=0;
+        for(int j=0; j<toklen; j++){
+            
+            if(arr[i][j]==arr[i+1][j])
+            {
+                finalctr1++;
+            }
+            
+        }
+        if(finalctr1==toklen){
+                finalctr2++;
+            }
+    }
+  
+  if(finalctr2==ctr-1){
+      printf("\ntrue\n");
+      
+  }
+  
+  else{
+      
+      printf("\nfalse");
+  }
+  
+  
+  //printf("\nfinalctr1: %d , finalctr2 : %d", finalctr1, finalctr2);
+  
+  
+  
+  
+  
+  
+    return 0;
+}
+
+-----------------------------------------------------------------------------------------------------------
+/**
+ 
+5.  Given a list of words, find all words that are unique
+(neither anagrams nor identical to any other word in the list).
+ 
+Example:
+ 
+Input: listen,silent,hello,world,abc,cba
+Output: hello,world
+ 
+**/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 50
+ 
+ 
+int main()
+{
+	char str[MAX];
+	int len;
+ 
+ 
+	printf("Enter comma-seperated words: \n");
+	if(fgets(str, MAX, stdin)!=NULL) {
+    len=strlen(str);
+    if(str[len-1]=='\n'){
+        str[len-1]='\0';
+    }
+ 
+	}
+	len=strlen(str);
+	char tmp[len];
+	memset(tmp, 0, MAX);
+	tmp[len]='\0';
+	strcpy(tmp,str);
+
+	char * tok;
+	int ctr=0; //counts number of tokens
+	tok=strtok(tmp, ",");
+	while(tok!=NULL){
+	    ctr++;
+	    tok=strtok(NULL, ",");
+	}
+	
+	char * arr[ctr];
+	char * sorted_arr[ctr];
+	
+	for(int i=0; i<ctr ; i++)
+	{
+	    arr[i]=(char *)malloc(MAX*sizeof(char));
+	    sorted_arr[i]=(char *)malloc(MAX*sizeof(char));
+	}
+	
+    //reset tmp
+    memset(tmp, 0, MAX);
+	tmp[len]='\0';
+	strcpy(tmp,str);
+    char * token;
+    int b=0;
+ 
+	token=strtok(tmp, ",");
+	while(token!=NULL)
+	{
+	    strcpy(arr[b++],token);
+	    token=strtok(NULL, ",");
+	}
+	
+ 
+for(int i=0; i<ctr ; i++){
+    
+    strcpy(sorted_arr[i] , arr[i]);
+}
+    //bubble sort 
+    for(int i=0; i<ctr; i++)
+    {
+        for(int j=0; j<strlen(sorted_arr[i])-1; j++)
+        {
+            for(int k=0; k<strlen(sorted_arr[i])-1-j; k++)
+            {
+                if(sorted_arr[i][k]>sorted_arr[i][k+1])
+                {
+                    //swap
+                    char tmp;
+                    tmp=sorted_arr[i][k];
+                    sorted_arr[i][k]=sorted_arr[i][k+1];
+                    sorted_arr[i][k+1]=tmp;
+                }
+            }
+        }
+    }
+    printf("\n\nSorted arr: \n");
+     for(int i=0; i<ctr; i++)
+    {
+        for(int j=0; j<strlen(arr[i]); j++)
+        {
+            printf("%c ", sorted_arr[i][j]);
+        }
+        
+        printf("\n");
+        
+    }
+int occurence[ctr];
+
+    for(int j=0; j<ctr; j++)
+    {
+        occurence[j]=0;
+    }
+
+
+    
+    for(int i=0; i<ctr-1; i++)
+    {
+     
+     
+        for(int j=i+1; j<ctr; j++)
+        {
+             if(strcmp(sorted_arr[i],sorted_arr[j])==0)
+             {
+                 occurence[i]++;
+                 occurence[j]++;
+             }
+            
+             //printf("\nhuh\n");
+        
+        }
+        
+         
+    }
+    
+    printf("Unique words: \n");
+    for(int j=0; j<ctr; j++)
+        {
+             if(occurence[j]==0)
+             {
+                 fputs(arr[j], stdout);
+                 printf("\n");
+             }
+            
+        
+        }
+
+
+	return 0;
+ 
+}
+
+-----------------------------------------------------------------------------------------------------------
+
+/*6 Write a program that takes two comma-separated lists of integers and finds which integer 
+from the first list has the highest occurrence in the second list. Print that integer and its count.
+
+Sample input:
+Enter the first list of integers (comma-separated):  5,3,4,6
+Enter the second list of integers (comma-separated):  5,4,2,1,4,3,3,2,5,3
+
+5,3,4,6
+5,4,2,1,4,3,3,2,5,3
+
+Sample Output
+3-3
+*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 30
+
+int main()
+{
+    
+    char first_line[MAX];
+    char second_line[MAX];
+    
+    int len1, len2;
+    
+    printf("\nEnter the first list of integers (comma-separated): ");
+    //input line1
+    if(fgets(first_line,MAX, stdin)!=NULL){
+        len1=strlen(first_line);
+        if(first_line[len1-1]=='\n'){
+            first_line[len1-1]='\0';
+        }
+        
+    }
+    len1=strlen(first_line);
+    
+    printf("\nEnter the second list of integers (comma-separated): ");
+    //input line2
+    if(fgets(second_line,MAX, stdin)!=NULL){
+        len2=strlen(second_line);
+        if(second_line[len2-1]=='\n'){
+            second_line[len2-1]='\0';
+        }
+        
+    }
+    len2=strlen(second_line);
+    
+    char temp1[MAX], temp2[MAX];
+    
+    memset(temp1, 0, MAX);
+    memset(temp2, 0, MAX);
+    
+    strcpy(temp1, first_line);
+    strcpy(temp2, second_line);
+    
+    
+    
+    //count number of tokens in line1
+    char*tok1;
+    char ctr1=0;
+    tok1=strtok(temp1, ",");
+    while(tok1!=NULL){
+        ctr1++;                     //no. of tokens in line1
+        tok1=strtok(NULL, ",");
+    }
+    
+    
+    
+    //count number of tokens in line2
+    char*tok2;
+    char ctr2=0;
+    tok2=strtok(temp2, ",");
+    while(tok2!=NULL){
+        ctr2++;                     //no. of tokens in line2
+        tok2=strtok(NULL, ",");
+    }
+    
+    
+    memset(temp1, 0, MAX);
+    memset(temp2, 0, MAX);
+    
+    strcpy(temp1, first_line);
+    strcpy(temp2, second_line);
+    
+    
+    
+    char * tokens1[ctr1]; //contains tokens of line 1
+    for(int i=0; i<ctr1; i++){
+        
+        tokens1[i]=(char*)malloc(MAX*sizeof(char));
+    }
+    
+    
+    char * tokens2[ctr2];//contains tokens of line 2
+    for(int i=0; i<ctr2; i++){
+        
+        tokens2[i]=(char*)malloc(MAX*sizeof(char));
+    }
+    
+    memset(temp1, 0, MAX);
+    memset(temp2, 0, MAX);
+    
+    strcpy(temp1, first_line);
+    strcpy(temp2, second_line);
+    
+    
+    //count number of tokens in line1
+    char*token1;
+    int a=0;
+    token1=strtok(temp1, ",");
+    while(token1!=NULL){
+        tokens1[a++]=token1;                
+        token1=strtok(NULL, ",");
+    }
+    
+  //   printf("\ntokens1: ");
+  //  for(int i=0; i<ctr1; i++){
+  //      
+  //      printf("%s ", tokens1[i]);
+  //      
+  //  }
+   // printf("\n");
+    
+    //count number of tokens in line2
+    char*token2;
+    int b=0;
+    token2=strtok(temp2, ",");
+    while(token2!=NULL){
+        tokens2[b++]=token2;                
+        token2=strtok(NULL, ",");
+    }
+    
+  //  printf("\ntokens2: ");
+  // for(int i=0; i<ctr2; i++){
+  //     
+  //     printf("%s ", tokens2[i]);
+  //     
+  // }
+  // printf("\n");
+    
+    
+    
+    int freq[ctr1];
+    //int count[ctr2];
+    
+    for(int i=0; i<ctr1; i++){
+        
+        freq[i]=0;
+        
+    }
+    
+    
+    
+    for(int i=0; i<ctr1; i++)
+    {
+        
+        for(int j=0; j<ctr2; j++)
+        {
+            
+          if(strcmp(tokens1[i],tokens2[j])==0) 
+          {
+            freq[i]++;
+          }
+            
+        }
+    }
+    
+  //  printf("\nfreq: ");
+  //  for(int i=0; i<ctr1; i++){
+  //      
+  //      printf("%d ", freq[i]);
+  //      
+  //  }
+    
+    int max_num;
+    max_num=freq[0];
+    int max_num_index;
+    for(int i=1; i<ctr1; i++){
+        
+        if(freq[i]>max_num){
+            
+            max_num=freq[i];
+            max_num_index=i;
+        }
+        
+    }
+    
+     printf("\nOutput: \n" );
+    if(max_num>0){
+        
+        printf("\n%s-%d",tokens1[max_num_index], max_num );
+    }
+    else{
+        printf("\nNo common elements found.\n");
+    }
+    
+    
+    return 0;
+}
+-----------------------------------------------------------------------------------------------------------
+
+/*7 Write a program that takes two comma-separated lists of integers as input. For each integer  N in the first list, calculate the sum of its occurrences in the second list and print  N−S for each integer.
+Sample input:
+ 
+Enter the first list of integers (comma-separated):  5, 3, 4,6
+Enter the second list of integers (comma-separated):  5,4,2,1,4,3,3,2,5,3
+ 
+Sample Output
+ 
+5-10
+4-8
+3-9
+6-0
+
+
+
+*/
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 30
+
+int main()
+{
+    
+    char first_line[MAX];
+    char second_line[MAX];
+    
+    int len1, len2;
+    
+    printf("\nEnter the first list of integers (comma-separated): ");
+    //input line1
+    if(fgets(first_line,MAX, stdin)!=NULL){
+        len1=strlen(first_line);
+        if(first_line[len1-1]=='\n'){
+            first_line[len1-1]='\0';
+        }
+        
+    }
+    len1=strlen(first_line);
+    
+    printf("\nEnter the second list of integers (comma-separated): ");
+    //input line2
+    if(fgets(second_line,MAX, stdin)!=NULL){
+        len2=strlen(second_line);
+        if(second_line[len2-1]=='\n'){
+            second_line[len2-1]='\0';
+        }
+        
+    }
+    len2=strlen(second_line);
+    
+    char temp1[MAX], temp2[MAX];
+    
+    memset(temp1, 0, MAX);
+    memset(temp2, 0, MAX);
+    
+    strcpy(temp1, first_line);
+    strcpy(temp2, second_line);
+    
+    
+    
+    //count number of tokens in line1
+    char*tok1;
+    char ctr1=0;
+    tok1=strtok(temp1, ",");
+    while(tok1!=NULL){
+        ctr1++;                     //no. of tokens in line1
+        tok1=strtok(NULL, ",");
+    }
+    
+    
+    
+    //count number of tokens in line2
+    char*tok2;
+    char ctr2=0;
+    tok2=strtok(temp2, ",");
+    while(tok2!=NULL){
+        ctr2++;                     //no. of tokens in line2
+        tok2=strtok(NULL, ",");
+    }
+    
+    
+    memset(temp1, 0, MAX);
+    memset(temp2, 0, MAX);
+    
+    strcpy(temp1, first_line);
+    strcpy(temp2, second_line);
+    
+    
+    
+    char * tokens1[ctr1]; //contains tokens of line 1
+    for(int i=0; i<ctr1; i++){
+        
+        tokens1[i]=(char*)malloc(MAX*sizeof(char));
+    }
+    
+    
+    char * tokens2[ctr2];//contains tokens of line 2
+    for(int i=0; i<ctr2; i++){
+        
+        tokens2[i]=(char*)malloc(MAX*sizeof(char));
+    }
+    
+    memset(temp1, 0, MAX);
+    memset(temp2, 0, MAX);
+    
+    strcpy(temp1, first_line);
+    strcpy(temp2, second_line);
+    
+    
+    //count number of tokens in line1
+    char*token1;
+    int a=0;
+    token1=strtok(temp1, ",");
+    while(token1!=NULL){
+        tokens1[a++]=token1;                
+        token1=strtok(NULL, ",");
+    }
+    
+  //   printf("\ntokens1: ");
+  //  for(int i=0; i<ctr1; i++){
+  //      
+  //      printf("%s ", tokens1[i]);
+  //      
+  //  }
+   // printf("\n");
+    
+    //count number of tokens in line2
+    char*token2;
+    int b=0;
+    token2=strtok(temp2, ",");
+    while(token2!=NULL){
+        tokens2[b++]=token2;                
+        token2=strtok(NULL, ",");
+    }
+    
+  //  printf("\ntokens2: ");
+  // for(int i=0; i<ctr2; i++){
+  //     
+  //     printf("%s ", tokens2[i]);
+  //     
+  // }
+  // printf("\n");
+    
+    
+    
+    int result[ctr1];
+    
+    for(int i=0; i<ctr1; i++){
+        
+        result[i]=0;
+        
+    }
+    
+    
+    
+    for(int i=0; i<ctr1; i++)
+    {
+        
+        for(int j=0; j<ctr2; j++)
+        {
+            
+          if(strcmp(tokens1[i],tokens2[j])==0) 
+          {
+            result[i]=result[i]+atoi(tokens1[i]);
+          }
+            
+        }
+    }
+    
+  //  printf("\nfreq: ");
+  //  for(int i=0; i<ctr1; i++){
+  //      
+  //      printf("%d ", freq[i]);
+  //      
+  //  }
+    
+   
+   
+    printf("\nOutput: \n");
+    
+    for(int i=0; i<ctr1; i++){
+        printf("%s-%d\n", tokens1[i], result[i]);
+    }
+    
+    
+    return 0;
+}

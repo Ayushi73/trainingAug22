@@ -1,0 +1,579 @@
+***********************************string token*************************************************
+
+
+/*
+
+1. Write a program that removes duplicate words from a pipe-separated string.
+For example, the input apple|orange|banana|apple|grape should return apple|orange|banana|grape.
+
+*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 100
+
+int main()
+{   
+    char str[MAX];          //create string str
+    int len;
+    
+    memset(str, 0, MAX);    //initialize all values of str to 0
+
+    printf("Enter your string: ");
+    if(fgets(str, MAX, stdin)!=NULL)
+    {
+        len=strlen(str);
+        if(str[len-1]=='\n'){
+            str[len-1]='\0';
+        }
+        
+       // fputs(str, stdout); to test that str is taken as input properly
+    }
+    len=strlen(str);
+    
+    char tmp[MAX];          //create string tmp
+    memset(tmp, 0, MAX);    //initialize all values of tmp to 0
+
+    strncpy(tmp, str, len); //copy the contents of str to tmp
+    
+    int ctr=0;              //counter to check the total number of tokens
+    char * token;           //token variable for strtok
+
+    token=strtok(tmp, "|");
+    while(token!=NULL){
+        
+        ctr++;
+        //puts(token);
+        token=strtok(NULL, "|"); //set the delimeter to null
+        
+    }
+    
+   // printf("\nNo of tokens: %d", ctr);
+   
+   char * tokarray[ctr];
+   strncpy(tmp, str, len);
+   char * tok;
+   
+   for(int i=0; i<ctr; i++){
+       
+       tokarray[i]=(char *)malloc(MAX*sizeof(char));
+   }
+   
+   
+   
+   int k=0;
+   
+   tok=strtok(tmp, "|");
+    while(tok!=NULL){
+        
+        tokarray[k]=tok;
+        tok=strtok(NULL, "|"); //set the delimeter to null
+        k++;
+        
+    }
+    tokarray[k]='\0';
+   
+  // printf("Tok array : \n");  --> tokarray is proper
+  // for(int i=0; i<ctr; i++){
+  // puts(tokarray[i]);
+  // printf("\n");
+  // }
+
+int freq[ctr];
+
+for(int i=0 ; i<ctr; i++)
+{
+    freq[i]=1;
+}
+
+for(int i=0; i<ctr-1; i++)
+{
+    
+    if(freq[i]!=0)
+    {
+        for(int j=i+1; j<ctr; j++)
+        {
+            
+            if(strcmp(tokarray[j],tokarray[i])==0){
+                freq[i]=1+freq[i];
+                freq[j]=0;
+            }
+            
+        }
+    }
+}
+
+//print output string
+printf("Removing duplicate words:\n");
+//printf("Freq array: ");
+for(int i=0; i<ctr; i++){
+   
+    if(freq[i]!=0){
+        
+        if(i!=0){
+            printf("|");
+        }
+        printf("%s", tokarray[i]);
+    
+        
+        
+    }
+    //printf("%d ", freq[i]);
+    
+}
+
+    return 0;
+}
+
+_____________________________________________________________________________________________________________
+
+/*
+2. Write a program that Finds the unique words from a pipe-separated string.
+*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 50
+
+int main()
+{   
+    char str[MAX];      //input string str
+    char tmp[MAX];      //temp string to copy str
+    int len;            //to store length of str
+    
+    
+    printf("Enter string with pipe separated words: \n");
+    if(fgets(str, MAX, stdin)!=NULL){
+        len=strlen(str);
+        if (str[len-1]=='\n'){
+            str[len-1]='\0';
+        }
+        
+       // fputs(str, stdout); // str input successful
+        
+    }
+    
+    len=strlen(str);        //updated the value of len
+    
+    //copy str to tmp
+    memset(tmp, 0, MAX);
+    strncpy(tmp, str, len);
+    
+    char * token;
+    int ctr=0; //counter to find the number of tokens in tmp
+    token=strtok(tmp, "|");
+    
+    while(token!=NULL){
+        
+        ctr++;
+        token=strtok(NULL, "|");
+        
+    }
+    
+   // printf("No. of Tokens :%d", ctr);     //token count working fine
+   
+   // create array of ctr number of strings to store each token
+   char * arr[ctr];
+   
+   //dma for each string in the array
+   for(int i=0; i<ctr ; i++){
+       
+       arr[i]=(char * )malloc(MAX * sizeof(char));
+       
+   }
+   
+   
+   //reset tmp string because tokenizing changes the string
+   memset(tmp, 0, MAX);
+   strcpy(tmp, str);
+   tmp[len]='\0';
+   
+   //perform tokenization and store each token in array
+   char * tok;
+   int k=0;
+   tok=strtok(tmp, "|");
+   while(tok!=NULL){
+       
+       arr[k]=tok;
+       tok=strtok(NULL, "|");
+       k++;
+       
+   }
+   arr[k]='\0';
+   
+  // printf("printing array of tokens: ");
+  // for(int i=0; i<ctr ; i++){                 // array of tokens succesfully implemented
+  //     printf("%s ", arr[i]);
+  // }
+   
+   
+  //comparing elements to find unique elements
+  
+  //define a freq array of size ctr and store freq of each unique token
+  int freq[ctr];
+  
+  for(int i=0; i<ctr; i++)
+  {
+      freq[i]=1;
+      //printf("Freq[%d]=%d \n", i, freq[i]);
+  }
+  
+ 
+  for(int i = 0 ; i < ctr - 1 ; i++)
+  {
+      if(freq[i]!=0)
+      {
+          for (int j = i + 1 ; j < ctr ; j++)
+          {
+              if(strcmp(arr[i],arr[j])==0)      //always use strcmp to compare strings
+              {
+                  freq[i]=0;
+                  freq[j]=0;
+                  
+              }
+          }
+      
+      }
+      
+  }
+  
+ // for(int i=0; i<ctr; i++)
+ // {
+ //    // freq[i]=1;
+ //     printf("Freq[%d]=%d \n", i, freq[i]);
+ // }
+  
+  //print unique words
+  int num=0;
+  printf("\nString of unique words: \n");
+  for(int i = 0 ; i < ctr  ; i++)
+  {
+      if(freq[i]!=0){
+          
+          if(num!=0){
+              printf("|");
+          }
+          
+          printf("%s", arr[i]);
+          
+          num++;
+          
+      }
+      
+      
+      
+  }
+ 
+    return 0;
+}
+
+___________________________________________________________________________________________________________
+
+/**3. Write a program that sorts the words by their length in ascending order in a
+pipe-separated string.*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 50
+
+
+int main()
+{	char str[MAX];
+	char tmp[MAX];
+	int len;
+	memset(str, 0, MAX);
+
+	printf("Enter pipe separated string: ");
+	if(fgets(str, MAX, stdin)!=NULL) {
+		len=strlen(str);
+		if(str[len-1]=='\n') {
+			str[len-1]='\0';
+		}
+		//fputs(str, stdout);
+	}
+	len=strlen(str);
+
+	memset(tmp, 0, MAX);
+	strncpy(tmp, str, len);
+	tmp[len]='\0';
+
+	int ctr=0;
+	char * tok;
+
+	tok=strtok(tmp, "|");
+	while(tok!=NULL) {
+
+		ctr++;
+		tok=strtok(NULL, "|");
+	}
+
+//printf("\nTokens : %d", ctr);
+
+	char * arr[ctr];
+	for(int i=0; i<ctr ; i++) {
+
+		arr[i]=(char*)malloc(MAX*sizeof(char));
+	}
+//reset tmp
+	memset(tmp, 0, MAX);
+	strncpy(tmp, str, len);
+
+//	store each token in arr
+	char * token;
+	int k=0;
+	token=strtok(tmp, "|");
+	while(token!=NULL) {
+		strcpy(arr[k],token);
+		token=strtok(NULL, "|");
+		k++;
+	}
+
+
+//for(int i=0; i<ctr ; i++){
+//
+//    fputs(arr[i], stdout);
+//    printf(" ");
+//}
+
+	int max_len; //max length of token
+	max_len=strlen(arr[0]);
+	for(int i=1; i<ctr ; i++) {
+
+		if(strlen(arr[i])>max_len) {
+			max_len=strlen(arr[i]);
+		}
+
+
+	}
+
+
+	char * order[ctr]; // array that stores tokens in asc order of their length
+	for(int i=0; i<ctr; i++) {
+
+		order[i]=(char *)malloc(MAX * sizeof(char));
+
+	}
+
+
+	int j=0;
+	for(int toklen=0; toklen<=max_len; toklen++)
+	{
+		for(int i=0; i<ctr ; i++)
+		{
+
+			if(strlen(arr[i])==toklen)
+			{
+				order[j]=arr[i];
+				j++;
+			}
+
+		}
+	}
+
+	printf("\nString sorted in acsending order of length of the words : \n");
+	for(int i=0; i<ctr; i++) 
+	{   
+	    if(i!=0)
+	    {
+	        printf("|");
+	    }
+	    
+		printf("%s",order[i]);
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+	return 0;
+}
+__________________________________________________________________________________________________________
+
+/*4. Write a program that reverses each individual word in a pipe-separated string while keeping
+the original order of words. For example, the input apple|banana|grape should return
+elppa|ananab|eparg.*/
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 50
+
+void revtok(char * arr){
+    
+    int len=strlen(arr);
+    char revar[len];
+    revar[len]='\0';
+    
+    for(int i=0; i<len ; i++){
+        
+        revar[len-1-i]=arr[i];
+    }
+    
+    printf("%s", revar);
+}
+
+int main()
+{
+	char str[MAX];
+	char tmp[MAX];
+	int len;
+
+	printf("Enetr pipe seperated words: ");
+	if(fgets(str, MAX, stdin)!=NULL) {
+		len = strlen(str);
+		if(str[len-1]=='\n') {
+			str[len-1]='\0';
+		}
+
+		//fputs(str, stdout);
+	}
+	len = strlen(str);
+
+	memset(tmp, 0, MAX);
+	strncpy(tmp, str, len);
+	tmp[len]='\0';
+
+//	fputs(tmp, stdout);
+
+	int ctr=0;//count the number of tokens
+	char * tok;
+	tok=strtok(tmp, "|");
+	while(tok!=NULL) {
+
+		ctr++;
+		tok=strtok(NULL, "|");
+	}
+
+	char * arr[ctr];
+	for(int i=0; i<ctr; i++) {
+
+		arr[i]=(char*)malloc(MAX*sizeof(char));
+	}
+
+
+	//reset tmp
+	memset(tmp, 0, MAX);
+	strncpy(tmp, str, len);
+	tmp[len]='\0';
+
+	int k=0;
+	char * token;
+	token=strtok(tmp, "|");
+	while(token!=NULL) {
+
+		arr[k++]=token;
+		token=strtok(NULL, "|");
+	}
+
+	// printf("arr: \n");
+	// for(int i=0; i<ctr ; i++){
+	//     printf(" ");
+	// fputs(arr[i], stdout);
+	// }
+ 
+    
+    //reverse each token
+	for(int i=0; i<ctr ; i++)
+	{
+	    if(i!=0)
+	    {
+	        printf("|");
+	    }
+	    revtok(arr[i]);
+	    
+		
+	}
+
+		return 0;
+	}
+
+__________________________________________________________________________________________________________
+
+/*5. Write a program that splits a pipe-separated string into words and reverses the order
+of the words. For example, the input apple|banana|grape|orange should return
+orange|grape|banana|apple.*/
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 50
+
+int main() {
+
+	char str[MAX];
+	char tmp[MAX];
+	int len;
+
+	printf("Enter pipe separated words : ");
+	if(fgets(str, MAX, stdin)!=NULL) {
+		len=strlen(str);
+		if(str[len-1]=='\n') {
+			str[len-1]='\0';
+		}
+	}
+	//fputs(str, stdout);
+	len=strlen(str);
+
+	memset(tmp, 0, MAX);
+	strncpy(tmp, str, len);
+	tmp[len]='\0';
+
+
+	int ctr=0;
+	char * tok;
+	tok=strtok(tmp, "|");
+	while(tok!=NULL) {
+
+		ctr++;
+		tok=strtok(NULL, "|");
+	}
+
+	//printf("No of tokens: %d", ctr);
+
+
+	char * arr[ctr];
+	for(int i=0; i< ctr ; i++) {
+
+		arr[i]=(char *)malloc(MAX * sizeof(char));
+
+	}
+
+	//reset tmp
+	memset(tmp, 0, MAX);
+	strncpy(tmp, str, len);
+	tmp[len]='\0';
+
+	int j=0;
+	char * token;
+	token=strtok(tmp, "|");
+	while(token!=NULL) {
+
+		arr[j++]=token;
+		token=strtok(NULL, "|");
+	}
+	arr[j]='\0';
+
+	printf("Reversed order of words    : ");
+	for(int i=ctr-1; i>=0; i--) {
+
+		if(i!=ctr-1)
+		{
+			printf("|");
+		}
+		printf("%s", arr[i]);
+	}
+
+	return 0;
+}
