@@ -1,0 +1,342 @@
+#include <stdio.h>
+#include <string.h>
+#include<unistd.h>
+int registerUser(){
+    int n=0;
+        printf("\nregister executed\n");
+        printf("\n***** OPTIONS *****\n");
+        printf("1. Login\n");                //(for new users)
+        printf("2. Unregister\n");            //(for registered users)    
+        printf("3. Make a call\n");         //(for registered users)
+        printf("4. Display log file\n");     //client becomes caller
+        printf("5. Exit");                //(for registered users)
+        printf("\nEnter your choice: ");             //exit the program
+        scanf("%d", &n);
+        switch(n){
+            case 1:
+            n=3;
+            break;
+            case 2:
+            n=2;
+            break;
+            case 3:
+            n=7;
+            break;
+            case 4:
+            n=8;
+            break;
+            case 5:
+            n=10;
+            break;
+        }
+        return n;
+}
+
+int loginUser(){
+    int n=0;
+     printf("\nlogin executed\n");
+        printf("\n***** OPTIONS *****\n");
+        printf("1. Enable call forwarding\n");         //(for new users)
+        printf("2. Disable call forwarding\n");            //(for registered users)    
+        printf("3. Unregister\n");       //(for registered users)
+        printf("4. Logout\n");       //(for registered users)
+        printf("5. Change password\n");       //(for registered users)
+        printf("6. Make a call\n");      //client becomes caller
+        printf("7. Display log file\n"); //(for registered users)
+        printf("8. Exit\n");             //exit the program
+        printf("\nEnter your choice: ");             //exit the program
+        scanf("%d", &n);
+        switch(n){
+            case 1:
+            n=5;
+            break;
+            
+            case 2:
+            n=6;
+            break;
+            
+            case 3:
+            n=2;
+            break;
+            
+            case 4:
+            n=4;
+            break;
+            
+            case 5:
+            n=9;
+            break;
+            
+            case 6:
+            n=7;
+            break;
+            
+            case 7:
+            n=8;
+            break;
+            
+            case 8:
+            n=10;
+            break;
+    }
+    
+    return n;
+}
+
+int enableCF(){
+     int n=0;
+     printf("\nenable executed\n");
+        printf("\n***** OPTIONS *****\n");
+        printf("1. Disable call forwarding\n");         //(for new users)
+        printf("2. Unregister\n");       //(for registered users)
+        printf("3. Logout\n");       //(for registered users)
+        printf("4. Change password\n");       //(for registered users)
+        printf("5. Make a call\n");      //client becomes caller
+        printf("6. Display log file\n"); //(for registered users)
+        printf("7. Exit\n");             //exit the program
+        printf("\nEnter your choice: ");             //exit the program
+        scanf("%d", &n);
+        switch(n){
+            
+            case 1:
+            n=6;
+            break;
+            
+            case 2:
+            n=2;
+            break;
+            
+            case 3:
+            n=4;
+            break;
+            
+            case 4:
+            n=9;
+            break;
+            
+            case 5:
+            n=7;
+            break;
+            
+            case 6:
+            n=8;
+            break;
+            
+            case 7:
+            n=10;
+            break;
+            
+            default:
+            printf("\nPlease enter a valid choice ! \n");
+            n=5;
+            break;
+
+    }
+    return n;
+ 
+}
+
+int disableCF(){
+    printf("\ndisable executed\n");
+     int n=0;
+     
+        printf("\n***** OPTIONS *****\n");
+        printf("1. Enable call forwarding\n");         //(for new users)
+        printf("2. Unregister\n");       //(for registered users)
+        printf("3. Logout\n");       //(for registered users)
+        printf("4. Change password\n");       //(for registered users)
+        printf("5. Make a call\n");      //client becomes caller
+        printf("6. Display log file\n"); //(for registered users)
+        printf("7. Exit\n");             //exit the program
+        printf("\nEnter your choice: ");             //exit the program
+        scanf("%d", &n);
+        switch(n){
+            
+            case 1:
+            n=5;
+            break;
+            
+            case 2:
+            n=2;
+            break;
+            
+            case 3:
+            n=4;
+            break;
+            
+            case 4:
+            n=9;
+            break;
+            
+            case 5:
+            n=7;
+            break;
+            
+            case 6:
+            n=8;
+            break;
+            
+            case 7:
+            n=10;
+            break;
+            
+            default:
+            printf("\nPlease enter a valid choice ! \n");
+            n=6;
+            break;
+
+    }
+    return n;
+ 
+}
+
+int displayLogs(){
+    int n=0;
+        printf("\ndisplay log file executed\n");
+        //ask for username,phn num , password 
+        //displays log files then takes user to main menue
+        n=0;
+        return n;
+    
+}
+
+
+int unregisterUser(){
+    int n=0;
+    char c;
+    printf("\nunregister executed\n");
+    printf("\nAre you sure you want to unregister?(y/n)\n");
+    getchar();
+    scanf("%c", &c);
+    if(c=='y'||c=='Y'){
+        printf("\nUnregistered successfully\n");
+
+ 
+    }
+    else if(c=='n'||c=='N'){
+        printf("You have entered no");
+
+    }
+    else{
+        printf("\nInvalid choice. Please try again.\n");
+        
+    }
+    
+    n=0;
+    return n;
+}
+
+
+int main()
+{
+    int choice=0;
+    
+    while(1){
+ 
+
+    if(choice==0){
+        printf("\n\n***** OPTIONS *****\n");
+        printf("1. Register\n");         //(for new users)
+        printf("2. Login\n");            //(for registered users)    
+        printf("3. Unregister\n");       //(for registered users)
+        printf("4. Make a call\n");      //client becomes caller
+        printf("5. Display log file\n"); //(for registered users)
+        printf("6. Exit\n");             //exit the program
+        printf("\nEnter your choice: ");             //exit the program
+        scanf("%d", &choice);
+        switch(choice){
+            case 1:
+            choice=1;
+            break;
+            
+            case 2:
+            choice=3;
+            break;
+            
+            case 3:
+            choice=2;
+            break;
+            
+            case 4:
+            choice=7;
+            break;
+            
+            case 5:
+            choice=8;
+            break;
+            
+            case 6:
+            choice=10;
+            break;
+
+            default:
+            printf("\nPlease enter a valid choice ! \n");
+            choice=0;
+        }
+    }
+    if(choice==1){ //done
+       //register
+    choice=registerUser(choice);
+
+    }
+    if(choice==2){  //done
+        //unregister
+       choice=unregisterUser(choice);
+       
+    }
+    if(choice==3){ //done
+        //login
+       choice=loginUser(choice);
+    }
+    if(choice==4){
+        //logout
+        printf("\nLogging out of the system in...\n");
+        for(int i=0; i<5; i++)
+            {
+                sleep(1);
+                printf("%d..\n", 5-i);
+            }
+        sleep(1);
+        printf("\nSuccessfully logged out.\n");
+        choice=0;
+    }
+    if(choice==5){
+        //enable
+        choice=enableCF(choice);
+        
+    }
+    if(choice==6){
+        //disable
+       choice=disableCF(choice);
+        
+        
+    }
+    if(choice==7){
+       //make a call
+    //   choice=outgoingCall(choice);
+       printf("\nmake a call executed\n");
+       break;
+    }
+    if(choice==8){
+        //display log file
+        choice=displayLogs(choice);
+        
+        
+    }
+ 
+    if(choice==9){
+        //change password
+    //    choice=changePassword(choice);
+        printf("\nchange password executed\n");
+        break;
+    }
+ 
+    if(choice==10){
+        //exit
+        printf("\nexit executed\n");
+        break;
+    }
+ 
+
+    }
+}

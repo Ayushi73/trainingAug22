@@ -1,0 +1,772 @@
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <unistd.h>
+  #include <arpa/inet.h>
+ 
+  #define PORT 8080
+  #define BUFFER_SIZE 256
+  int callLogCount=0;
+  void handleError(const char *message) {
+      perror(message);
+      exit(EXIT_FAILURE);
+  }
+ 
+  void registerUser(int sockfd) {
+ 
+      char username[50], password[100], phone_no[11];
+ 
+ 
+ 
+      printf("Enter username: ");
+ 
+      fgets(username, sizeof(username), stdin);
+ 
+      username[strcspn(username, "\n")] = '\0';  // Remove newline character
+ 
+ 
+ 
+      printf("Enter password: ");
+ 
+      fgets(password, sizeof(password), stdin);
+ 
+      password[strcspn(password, "\n")] = '\0';
+ 
+ 
+ 
+      printf("Enter phone_no.: +91 ");
+ 
+     fgets(phone_no, sizeof(phone_no), stdin);
+
+     phone_no[strcspn(phone_no, "\n")] = '\0';
+
+
+
+     char buffer[BUFFER_SIZE];
+
+     sprintf(buffer, "REGISTER %s %s %s", username, password, phone_no);
+
+
+
+     // Send registration request
+
+     if (send(sockfd, buffer, strlen(buffer), 0) < 0) {
+
+         handleError("Failed to send registration request");
+
+     }
+
+
+
+     // Receive response
+
+     ssize_t bytes_received = recv(sockfd, buffer, BUFFER_SIZE, 0);
+
+     if (bytes_received < 0) {
+
+         handleError("Failed to receive response");
+
+     } else if (bytes_received == 0) {
+
+         printf("Connection closed by server.\n");
+
+         return;  // Exit the function if the server closed the connection
+
+     }
+
+
+
+     buffer[bytes_received] = '\0';  // Null-terminate the received data
+
+     printf("%s\n", buffer);
+
+ }
+
+
+
+ void unregisterUser(int sockfd) {
+
+ char phone_no[11], password[100];
+
+ printf("\nEnter phone_no: +91 ");
+ fgets(phone_no, sizeof(phone_no), stdin);
+ phone_no[strcspn(phone_no, "\n")] = 0; // Remove newline
+
+
+
+ printf("\nEnter password: ");
+
+ fgets(password, sizeof(password), stdin);
+
+ password[strcspn(password, "\n")] = 0; // Remove newline
+
+
+
+ char buffer[BUFFER_SIZE];
+ snprintf(buffer, sizeof(buffer), "UNREGISTER %s %s", phone_no, password);
+
+
+
+ // Sending the unregister request
+ if (send(sockfd, buffer, strlen(buffer), 0) < 0) {
+
+ handleError("Send failed");
+ }
+
+
+
+ // Receiving the response
+
+ memset(buffer, 0, sizeof(buffer)); // Clear the buffer
+ ssize_t bytes_received = recv(sockfd, buffer, sizeof(buffer) - 1, 0);
+ if (bytes_received < 0) {
+ handleError("Receive failed");
+ } else if (bytes_received == 0) {
+ printf("Connection closed by the server.\n");
+ return;
+
+ }
+
+
+
+ buffer[bytes_received] = '\0'; // Null-terminate the received data
+ printf("%s\n", buffer);
+
+ }
+
+
+
+ void loginUser(int sockfd) {
+
+ char username[50], phone_no[11], password[100];
+
+
+
+ // Prompt for username
+
+ printf("Enter username: ");
+
+ if (fgets(username, sizeof(username), stdin) == NULL) {
+
+ handleError("Failed to read username");
+
+ }
+
+ username[strcspn(username, "\n")] = 0;  // Remove newline character
+
+
+
+ // Prompt for phone number
+
+ printf("Enter phone_no: +91 ");
+
+ if (fgets(phone_no, sizeof(phone_no), stdin) == NULL) {
+
+ handleError("Failed to read phone number");
+
+ }
+
+ phone_no[strcspn(phone_no, "\n")] = 0;  // Remove newline character
+
+
+
+ // Prompt for password
+
+ printf("Enter password: ");
+
+ if (fgets(password, sizeof(password), stdin) == NULL) {
+
+ handleError("Failed to read password");
+
+ }
+
+ password[strcspn(password, "\n")] = 0;  // Remove newline character
+
+
+
+ // Prepare the login request
+
+ char buffer[BUFFER_SIZE];
+
+ snprintf(buffer, sizeof(buffer), "LOGIN %s %s %s", username, phone_no, password);
+
+
+
+ // Send the login request with error handling
+
+ if (send(sockfd, buffer, strlen(buffer), 0) < 0) {
+
+ handleError("Send failed");
+
+ }
+
+
+
+ // Receive the response with error handling
+
+ memset(buffer, 0, sizeof(buffer)); // Clear the buffer
+
+ ssize_t bytes_received = recv(sockfd, buffer, sizeof(buffer) - 1, 0);
+
+ if (bytes_received < 0) {
+
+ handleError("Receive failed");
+
+ } else if (bytes_received == 0) {
+
+ printf("Connection closed by the server.\n");
+
+ return;  // Exit if the connection was closed
+
+ }
+
+
+
+ buffer[bytes_received] = '\0'; // Null-terminate the received data
+
+ printf("%s\n", buffer); // Print the server's response
+
+ }
+
+
+ void makeCall(int sockfd) {
+
+     char YourPhoneNo[50], callee[20], phone_no[11];
+
+
+
+     // Get user input for your phone number
+
+     printf("Enter Your Phone No: +91 ");
+
+     fgets(YourPhoneNo, sizeof(YourPhoneNo), stdin);
+
+     YourPhoneNo[strcspn(YourPhoneNo, "\n")] = '\0';  // Remove newline character
+
+
+
+     // Get user input for callee username
+
+     printf("Enter callee username: ");
+
+     fgets(callee, sizeof(callee), stdin);
+
+     callee[strcspn(callee, "\n")] = '\0';  // Remove newline character
+
+
+
+     // Get user input for callee phone number
+
+     printf("Enter callee phone_no: +91 ");
+
+     fgets(phone_no, sizeof(phone_no), stdin);
+
+     phone_no[strcspn(phone_no, "\n")] = '\0';  // Remove newline character
+
+
+
+     char buffer[BUFFER_SIZE];
+
+     sprintf(buffer, "CALL %s %s %s", YourPhoneNo, callee, phone_no);
+
+
+
+     // Send call request with error handling
+
+     if (send(sockfd, buffer, strlen(buffer), 0) < 0) {
+
+         handleError("Failed to send call request");
+
+     }
+
+
+
+     // Receive response with error handling
+
+     ssize_t bytes_received = recv(sockfd, buffer, BUFFER_SIZE, 0);
+
+     if (bytes_received < 0) {
+
+         handleError("Failed to receive response");
+
+     } else if (bytes_received == 0) {
+
+         printf("Connection closed by server.\n");
+
+         return;  // Exit the function if the server closed the connection
+
+     }
+
+
+
+     buffer[bytes_received] = '\0';  // Null-terminate the received data
+
+     printf("%s\n", buffer);
+
+ }
+
+ void displayCallLog(int sockfd) {
+  char caller[11];
+
+
+
+  printf("Enter Your Phone No: +91 ");
+  fgets(caller, sizeof(caller), stdin);
+  caller[strcspn(caller, "\n")] = 0; // Remove newline
+
+
+
+  char buffer[BUFFER_SIZE];
+  snprintf(buffer, sizeof(buffer), "CALLLOG %s", caller);
+
+
+
+  // Sending the call log request
+  if (send(sockfd, buffer, strlen(buffer), 0) < 0) {
+  handleError("Send failed");
+  }
+
+
+
+  // Receiving the response
+  memset(buffer, 0, sizeof(buffer)); // Clear the buffer
+  ssize_t bytes_received = recv(sockfd, buffer, sizeof(buffer) - 1, 0);
+  if (bytes_received < 0) {
+  handleError("Receive failed");
+  } else if (bytes_received == 0) {
+  printf("Connection closed by the server.\n");
+  return;
+  }
+
+
+
+  buffer[bytes_received] = '\0'; // Null-terminate the received data
+  printf("%s\n", buffer);
+ }
+
+
+
+
+ void changePassword(int sockfd) {
+
+     char phone_no[11], password[100], new_password[100];
+
+
+
+     // Get user input for phone number with error handling
+
+     printf("Enter phone no: +91 ");
+
+     fgets(phone_no, sizeof(phone_no), stdin);
+
+     phone_no[strcspn(phone_no, "\n")] = 0; // Remove newline character
+
+
+
+     // Get user input for old password with error handling
+
+     printf("Enter old password: ");
+
+     fgets(password, sizeof(password), stdin);
+
+     password[strcspn(password, "\n")] = 0; // Remove newline character
+
+
+
+     // Get user input for new password with error handling
+
+     printf("Enter new password: ");
+
+     fgets(new_password, sizeof(new_password), stdin);
+
+     new_password[strcspn(new_password, "\n")] = 0; // Remove newline character
+
+
+
+     char buffer[BUFFER_SIZE];
+
+     snprintf(buffer, sizeof(buffer), "CHANGE_PASSWORD %s %s %s", phone_no, password, new_password);
+
+
+
+     // Send the change password request with error handling
+
+     if (send(sockfd, buffer, strlen(buffer), 0) < 0) {
+
+         handleError("Send failed");
+
+     }
+
+
+
+     // Prepare to receive the response
+
+     memset(buffer, 0, sizeof(buffer)); // Clear the buffer
+
+     ssize_t bytes_received = recv(sockfd, buffer, sizeof(buffer) - 1, 0);
+
+
+
+     // Error handling for receiving response
+
+     if (bytes_received < 0) {
+
+         handleError("Receive failed");
+
+     } else if (bytes_received == 0) {
+
+         printf("Connection closed by the server.\n");
+
+         return; // Exit if the connection was closed
+
+     }
+
+
+
+     buffer[bytes_received] = '\0'; // Null-terminate the received data
+
+     printf("%s\n", buffer); // Print the response
+
+ }
+
+ void activateCallForwarding(int sockfd) {
+
+     char username[50], forwardingType[20], phone_no[11], destination[11] ;
+
+     int choice=0;
+
+
+
+     // Get user input with error handling
+
+     printf("Enter your username: ");
+
+     fgets(username, sizeof(username), stdin);
+
+     username[strcspn(username, "\n")] = '\0';  // Remove newline character
+
+
+
+     printf("Choose forwarding Type:\n1. Unconditional\n2. Busy\n3. Unanswered\n");
+
+     scanf("%d", &choice);
+
+     getchar();
+
+
+
+     switch(choice){
+
+
+
+         case 1:
+
+         strcpy(forwardingType,"Unconditional");
+
+         break;
+
+
+
+         case 2:
+
+         strcpy(forwardingType,"Busy");
+
+         break;
+
+
+
+         case 3:
+
+         strcpy(forwardingType,"Unanswered");
+
+         break;
+
+
+
+         default:
+
+         printf("\nInvalid choice. Please try again.\n");
+
+         return;
+
+
+
+     }
+
+
+
+
+
+     printf("Enter your phone_no: +91 ");
+
+     fgets(phone_no, sizeof(phone_no), stdin);
+
+     phone_no[strcspn(phone_no, "\n")] = '\0';
+
+
+
+     printf("Enter destination number: +91 ");
+
+     fgets(destination, sizeof(destination), stdin);
+
+     destination[strcspn(destination, "\n")] = '\0';
+
+
+
+     char buffer[BUFFER_SIZE];
+
+     sprintf(buffer, "ACTIVATE %s %s %s %s", username, forwardingType, phone_no, destination);
+
+
+
+     // Send activation request with error handling
+
+     if (send(sockfd, buffer, strlen(buffer), 0) < 0) {
+
+         handleError("Failed to send activation request");
+
+     }
+
+
+
+     // Receive response with error handling
+
+     ssize_t bytes_received = recv(sockfd, buffer, BUFFER_SIZE, 0);
+
+     if (bytes_received < 0) {
+
+         handleError("Failed to receive response");
+
+     } else if (bytes_received == 0) {
+
+         printf("Connection closed by server.\n");
+
+         return;  // Exit the function if the server closed the connection
+
+     }
+
+
+
+     buffer[bytes_received] = '\0';  // Null-terminate the received data
+
+     printf("%s\n", buffer);
+
+ }
+
+
+
+ void deactivateCallForwarding(int sockfd) {
+
+     char username[50], phone_no[11];
+
+
+
+     printf("Enter your username: ");
+
+     fgets(username, sizeof(username), stdin);
+
+     username[strcspn(username, "\n")] = 0; // Remove newline
+
+
+
+     printf("Enter your phone_no: +91 ");
+
+     fgets(phone_no, sizeof(phone_no), stdin);
+
+     phone_no[strcspn(phone_no, "\n")] = 0; // Remove newline
+
+
+
+     char buffer[BUFFER_SIZE];
+
+     snprintf(buffer, sizeof(buffer), "DEACTIVATE %s %s", username, phone_no);
+
+
+
+     // Sending the deactivate command
+
+     if (send(sockfd, buffer, strlen(buffer), 0) < 0) {
+
+         handleError("Send failed");
+
+     }
+
+
+
+     // Receiving the response
+
+     memset(buffer, 0, sizeof(buffer)); // Clear the buffer
+
+     ssize_t bytes_received = recv(sockfd, buffer, sizeof(buffer) - 1, 0);
+
+     if (bytes_received < 0) {
+
+         handleError("Receive failed");
+
+     } else if (bytes_received == 0) {
+
+         printf("Connection closed by the server.\n");
+
+         return;
+
+     }
+
+
+
+     buffer[bytes_received] = '\0'; // Null-terminate the received data
+
+     printf("%s\n", buffer);
+
+ }
+
+
+
+
+
+
+
+ int main() {
+     int sockfd = -1;
+     struct sockaddr_in server_addr;
+     int choice = 0;
+
+     // Create socket
+     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+         handleError("Socket creation failed");
+     }
+
+     // Define server address
+     server_addr.sin_family = AF_INET;
+     server_addr.sin_port = htons(PORT);
+     server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+     // Connect to server
+     if (connect(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+         handleError("Connection to server failed");
+     }
+
+     while (1) {
+         printf("\n\n1. Register\n2. Login\n3. Make a call\n4. Exit\n");
+         printf("Choose an option: ");
+         if (scanf("%d", &choice) != 1) {
+             fprintf(stderr, "Invalid input. Please enter a number.\n");
+             while (getchar() != '\n'); // Clear the input buffer
+             continue;
+         }
+
+         while (getchar() != '\n'); // Clear the input buffer after reading choice
+
+         if (choice == 1) {
+             registerUser(sockfd);
+             int action=0;
+             printf("\nEnter your choice:\n1. Login\n2. Unregister\n3. Exit\n");
+             scanf("%d", &action);
+             getchar();
+
+
+             if (action== 1) {
+                 loginUser(sockfd);
+                 int subChoice;
+                 while (1) {
+                     printf("\n\n1. Activate Call Forwarding\n2. Deactivate Call Forwarding\n3. Make a call\n4. Display call logs\n5. Change password\n6.     Logout\n7. Unregister\n");
+                     printf("Choose an option: ");
+                     if (scanf("%d", &subChoice) != 1) {
+                         fprintf(stderr, "Invalid input. Please enter a number.\n");
+                         while (getchar() != '\n'); // Clear the input buffer
+                         continue;
+                     }
+
+                     while (getchar() != '\n'); // Clear the input buffer after reading subChoice
+
+                     switch (subChoice) {
+                         case 1:
+                             activateCallForwarding(sockfd);
+                             break;
+                         case 2:
+                             deactivateCallForwarding(sockfd);
+                             break;
+                         case 3:
+                             makeCall(sockfd);
+                             break;
+                         case 4:
+                             displayCallLog(sockfd);
+                             break;
+                         case 5:
+                             changePassword(sockfd);
+                             break;
+                         case 6:
+                             printf("Logging out..\n");
+                             break;
+                         case 7:
+                             unregisterUser(sockfd);
+                             break;
+                         default:
+                             printf("Invalid choice. Please try again.\n");
+                     }
+                 }
+             } else if (action == 2) {
+                 unregisterUser(sockfd);
+             } else if(action==3) {
+                 printf("Exiting...\n");
+                 sleep(2);
+                 printf("Session terminated.\n");
+                 break;
+             }
+             else{
+             printf("Invalid choice.\n");
+             break;
+             }
+         } else if (choice == 2) {
+             loginUser(sockfd);
+             int subChoice;
+             while (1) {
+                 printf("\n\n1. Activate Call Forwarding\n2. Deactivate Call Forwarding\n3. Make a call\n4. Display call logs\n5. Change password\n6. Logo    ut\n7. Unregister\n");
+                 printf("Choose an option: ");
+                 if (scanf("%d", &subChoice) != 1) {
+                     fprintf(stderr, "Invalid input. Please enter a number.\n");
+                     while (getchar() != '\n'); // Clear the input buffer
+                     continue;
+                 }
+
+                 while (getchar() != '\n'); // Clear the input buffer after reading subChoice
+
+                 switch (subChoice) {
+                     case 1:
+                         activateCallForwarding(sockfd);
+                         break;
+                     case 2:
+                         deactivateCallForwarding(sockfd);
+                         break;
+                     case 3:
+                         makeCall(sockfd);
+                         break;
+                     case 4:
+                         displayCallLog(sockfd);
+                         break;
+                     case 5:
+                         changePassword(sockfd);
+                         break;
+                     case 6:
+                         printf("Logging out..\n");
+                         break;
+                     case 7:
+                         unregisterUser(sockfd);
+                         break;
+                     default:
+                         printf("Invalid choice. Please try again.\n");
+                 }
+             }
+         } else if (choice == 3) {
+             makeCall(sockfd);
+         } else if (choice == 4) {
+             close(sockfd);
+             exit(EXIT_SUCCESS);
+         } else {
+             printf("Invalid choice. Please try again.\n");
+         }
+     }
+
+     close(sockfd);
+     return 0;
+ }
+
